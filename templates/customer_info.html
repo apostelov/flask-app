@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Klantgegevens</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Bavarian Motors - Klantgegevens</h1>
+
+        <form method="POST">
+            <label for="name">Naam:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="address">Adres:</label>
+            <input type="text" id="address" name="address" required>
+
+            <label for="iban">IBAN:</label>
+            <input type="text" id="iban" name="iban" required>
+
+            <h2>Ik ga akkoord met de voorwaarden:</h2>
+            <label for="signature">
+                <input type="checkbox" id="signature" name="signature" value="Akkoord" required> Akkoord
+            </label>
+
+            <h2>Kies betalingsoptie:</h2>
+            <label for="monthly">
+                <input type="radio" id="monthly" name="payment_option" value="monthly" required> Maandelijks incl. BTW
+            </label>
+            <label for="yearly">
+                <input type="radio" id="yearly" name="payment_option" value="yearly"> Jaarlijks incl. BTW
+            </label>
+
+            <div>
+                <button type="submit" name="back">Vorige</button>
+                <button type="submit">Volgende</button>
+            </div>
+        </form> 
+        
+        <footer>
+            <p>&copy; 2025 Bavarian Motors. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
+

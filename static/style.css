@@ -1,0 +1,176 @@
+/* General styles for the body of the document */
+body {
+    font-family: 'Roboto', sans-serif; /* Sets the font style to Roboto */
+    margin: 0; /* Removes default margin */
+    padding: 0; /* Removes default padding */
+    background-color: #f9f9f9; /* Light gray background color for the page */
+    color: #333; /* Sets the text color to dark gray for readability */
+    display: flex; /* Enables flexbox layout */
+    justify-content: center; /* Centers content horizontally */
+    align-items: center; /* Centers content vertically */
+    height: 100vh; /* Ensures the page height fits the viewport */
+}
+
+/* Styling the main container for content */
+.container {
+    max-width: 600px; /* Limits the container width */
+    background-color: #ffffff; /* White background for the container */
+    border-radius: 25px; /* Rounded corners for a softer appearance */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for depth */
+    padding: 20px; /* Space inside the container */
+    text-align: center; /* Centers text content inside the container */
+    overflow: hidden; /* Prevents content overflow outside the container */
+}
+
+/* Heading styles for uniform text appearance */
+h1, h2 {
+    text-align: center; /* Centers all headings */
+    margin: 10px 0; /* Adds spacing above and below the headings */
+    color: #003399; /* Dark blue color for headings */
+}
+
+h1 {
+    font-size: 26px; /* Larger text size for primary headings */
+    font-weight: 700; /* Bold font for emphasis */
+}
+
+h2 {
+    font-size: 18px; /* Smaller text size for secondary headings */
+    font-weight: 400; /* Regular weight for subtler emphasis */
+    color: #666; /* Light gray color for secondary headings */
+}
+
+/* Form styles for layout and appearance */
+form {
+    display: flex; /* Uses flexbox for layout */
+    flex-direction: column; /* Stacks elements vertically */
+    gap: 15px; /* Adds space between form elements */
+    align-items: center; /* Centers form elements */
+}
+
+/* Individual form row for aligning labels and inputs */
+form div {
+    display: flex; /* Enables flexbox layout */
+    justify-content: space-between; /* Spreads elements evenly */
+    align-items: center; /* Aligns elements vertically */
+    width: 100%; /* Full width of the container */
+    padding: 10px 0; /* Adds vertical spacing */
+}
+
+/* Styling for form labels */
+label {
+    font-size: 16px; /* Sets the font size for labels */
+    color: #333; /* Dark gray color for readability */
+    cursor: pointer; /* Changes cursor to pointer on hover */
+}
+
+/* Input styles for text and number fields */
+input[type="text"], input[type="number"] {
+    width: 90%; /* Takes up most of the row width */
+    padding: 10px; /* Adds inner spacing for inputs */
+    border: 1px solid #ccc; /* Light gray border */
+    border-radius: 8px; /* Rounded corners for consistency */
+    background-color: #f7f7f7; /* Light background for input fields */
+    font-size: 16px; /* Standard text size */
+    text-align: center; /* Centers input text */
+}
+
+/* Focus state for inputs to improve accessibility */
+input[type="text"]:focus, input[type="number"]:focus {
+    border-color: #003399; /* Highlighted border color */
+    outline: none; /* Removes the default outline */
+}
+
+/* Button styles for form actions */
+button {
+    padding: 12px 24px; /* Adjusts button size */
+    border: none; /* Removes default border */
+    border-radius: 25px; /* Rounded button appearance */
+    background-color: #003399; /* Primary button color */
+    color: #fff; /* White text for contrast */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 16px; /* Sets button font size */
+    font-weight: 700; /* Bold text for emphasis */
+    transition: all 0.3s ease; /* Smooth hover effects */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a shadow for depth */
+}
+
+/* Hover state for buttons */
+button:hover {
+    background-color: #001f66; /* Darker blue on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow effect */
+}
+
+/* Toggle switch styles */
+.toggle-wrapper {
+    position: relative; /* Allows absolute positioning within */
+    width: 60px; /* Width of the toggle switch */
+    height: 10px; /* Height of the toggle switch */
+}
+
+/* Hide default toggle input */
+.toggle-wrapper input {
+    opacity: 0; /* Makes the input invisible */
+    width: 0; /* Removes visual presence */
+    height: 0; /* Removes visual presence */
+}
+
+/* Slider style for toggle switch */
+.slider {
+    position: absolute; /* Positioned inside the wrapper */
+    cursor: pointer; /* Pointer cursor for interaction */
+    top: 0; /* Aligns to the top of the wrapper */
+    left: 0; /* Aligns to the left of the wrapper */
+    right: 0; /* Stretches to the right */
+    bottom: 0; /* Stretches to the bottom */
+    background-color: #ccc; /* Default gray background */
+    transition: 0.4s; /* Smooth transition for toggle */
+    border-radius: 30px; /* Rounded slider */
+}
+
+/* Circular toggle handle */
+.slider:before {
+    position: absolute; /* Positioned inside the slider */
+    content: ''; /* Empty content for visual */
+    height: 26px; /* Height of the circle */
+    width: 26px; /* Width of the circle */
+    left: 2px; /* Spacing from the left edge */
+    bottom: 2px; /* Spacing from the bottom edge */
+    background-color: white; /* White toggle button */
+    transition: 0.4s; /* Smooth movement */
+    border-radius: 50%; /* Fully rounded circle */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Adds shadow for depth */
+}
+
+/* Checked state for the toggle */
+input:checked + .slider {
+    background-color: #003399; /* Blue background for active state */
+}
+
+/* Checked state for the toggle handle */
+input:checked + .slider:before {
+    transform: translateX(30px); /* Moves the toggle button */
+}
+
+/* Footer styling for additional information */
+footer {
+    text-align: center; /* Centers the footer text */
+    margin-top: 20px; /* Adds spacing above the footer */
+    font-size: 14px; /* Smaller font size for footer text */
+    color: #666; /* Light gray color */
+}
+
+/* Custom styles for the license plate input */
+.license_plate {
+    background-color: #ffcc00; /* Bright yellow background for visibility */
+    color: #000000; /* Black text for contrast */
+    font-weight: bold; /* Bold text for prominence */
+    text-transform: uppercase; /* Ensures text is displayed in uppercase */
+    border: 1px solid #000000; /* Black border for definition */
+}
+
+/* Focus state for the license plate input */
+.license_plate:focus {
+    border-color: #003399; /* Blue border on focus for consistency */
+    outline: none; /* Removes the default focus outline */
+}

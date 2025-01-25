@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overzicht</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Bavarian Motors - Overzicht</h1>
+        
+        <h2>Voertuiggegevens</h2>
+        <p>Kenteken: {{ vehicle_data.license_plate }}</p>
+        <p>Model: {{ vehicle_data.model }}</p>
+        <p>Bouwjaar: {{ vehicle_data.year }}</p>
+        <p>APK-vervaldatum: {{ vehicle_data.apk_expiration }}</p>
+
+        <h2>Klantgegevens</h2>
+        <p>Naam: {{ customer_data.name }}</p>
+        <p>Adres: {{ customer_data.address }}</p>
+        <p>IBAN: {{ customer_data.iban }}</p>
+        <p>Akkoord met de voorwaarden: {{ customer_data.signature }}</p>
+
+        <h2>Kosten</h2>
+        <p>Gekozen betalingsoptie: {{ payment_option }}</p>
+        <p>Totale kosten incl. BTW: €{{ total_cost }}</p>
+
+        <form method="POST">
+            <button type="submit" name="back">Vorige</button>
+            <button type="button" onclick="window.print()">Print Offerte</button>
+        </form>
+        <footer>
+            <p>&copy; 2025 Bavarian Motors. All rights reserved.</p>
+        </footer>
+    </div>
+    
+    
+</body>
+</html>

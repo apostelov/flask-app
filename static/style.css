@@ -14,10 +14,11 @@ body {
 /* Styling the main container for content */
 .container {
     max-width: 600px; /* Limits the container width */
+    max-height: fit-content;
     background-color: #ffffff; /* White background for the container */
     border-radius: 25px; /* Rounded corners for a softer appearance */
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for depth */
-    padding: 20px; /* Space inside the container */
+    padding: 25px; /* Space inside the container */
     text-align: center; /* Centers text content inside the container */
     overflow: hidden; /* Prevents content overflow outside the container */
 }
@@ -44,7 +45,7 @@ h2 {
 form {
     display: flex; /* Uses flexbox for layout */
     flex-direction: column; /* Stacks elements vertically */
-    gap: 15px; /* Adds space between form elements */
+    gap: 0px; /* Adds space between form elements */
     align-items: center; /* Centers form elements */
 }
 
@@ -59,7 +60,7 @@ form div {
 
 /* Styling for form labels */
 label {
-    font-size: 16px; /* Sets the font size for labels */
+    font-size: 20px; /* Sets the font size for labels */
     color: #333; /* Dark gray color for readability */
     cursor: pointer; /* Changes cursor to pointer on hover */
 }
@@ -72,7 +73,8 @@ input[type="text"], input[type="number"] {
     border-radius: 8px; /* Rounded corners for consistency */
     background-color: #f7f7f7; /* Light background for input fields */
     font-size: 16px; /* Standard text size */
-    text-align: center; /* Centers input text */
+    text-align: left; /* Aligns input text to the left */
+    text-transform: uppercase; /* Transforms input text to uppercase */
 }
 
 /* Focus state for inputs to improve accessibility */

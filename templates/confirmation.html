@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bevestiging</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Bavarian Motors - Bevestiging</h1>
+
+        <h2>Overzicht van uw gegevens</h2>
+        <table>
+            <tr>
+                <th>Naam</th>
+                <td>{{ customer_data.name }}</td>
+            </tr>
+            <tr>
+                <th>Adres</th>
+                <td>{{ customer_data.address }}</td>
+            </tr>
+            <tr>
+                <th>E-mail</th>
+                <td>{{ customer_data.email }}</td>
+            </tr>
+            
+                <th>IBAN</th>
+                <td>{{ customer_data.iban }}</td>
+            </tr>
+            <tr>
+                <th>Betalingsoptie</th>
+                <td>{{ payment_option }}</td>
+            </tr>
+            <tr>
+                <th>Totale kosten</th>
+                <td>€{{ total_cost }}</td>
+            </tr>
+            <tr>
+                <th>Kosten per maand (incl. BTW)</th>
+                <td>€{{ monthly_cost }}</td>
+            </tr>
+        </table>
+
+        <!-- Actieknoppen -->
+        <div class="button-group">
+            <button class="print" onclick="window.print()">Print</button>
+            </button>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Bavarian Motors. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -10,39 +10,39 @@
     <div class="container">
         <h1>Bavarian Motors - Klantgegevens</h1>
 
+        <!-- Bevestiging van de gekozen betalingsoptie -->
+        <p>Gekozen betalingsoptie: <strong>{{ payment_option }}</strong></p>
+
         <form method="POST">
+            <!-- Klantgegevens invoer -->
             <label for="name">Naam:</label>
             <input type="text" id="name" name="name" required>
 
             <label for="address">Adres:</label>
             <input type="text" id="address" name="address" required>
 
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email" required>
+
             <label for="iban">IBAN:</label>
             <input type="text" id="iban" name="iban" required>
 
+            <!-- Voorwaarden akkoord -->
             <h2>Ik ga akkoord met de voorwaarden:</h2>
-            <label for="signature">
+            <label>
                 <input type="checkbox" id="signature" name="signature" value="Akkoord" required> Akkoord
             </label>
 
-            <h2>Kies betalingsoptie:</h2>
-            <label for="monthly">
-                <input type="radio" id="monthly" name="payment_option" value="monthly" required> Maandelijks incl. BTW
-            </label>
-            <label for="yearly">
-                <input type="radio" id="yearly" name="payment_option" value="yearly"> Jaarlijks incl. BTW
-            </label>
-
+            <!-- Navigatieknoppen -->
             <div>
-                <button type="submit" name="back">Vorige</button>
-                <button type="submit">Volgende</button>
+                <button type="submit" formaction="{{ url_for('summary') }}">Vorige</button>
+                <button type="submit">Bevestigen</button>
             </div>
-        </form> 
-        
+        </form>
+
         <footer>
             <p>&copy; 2025 Bavarian Motors. All rights reserved.</p>
         </footer>
     </div>
 </body>
 </html>
-

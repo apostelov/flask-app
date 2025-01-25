@@ -23,8 +23,8 @@ TASKS = {
     "ac_system_check": {"label": "Controle werking aircosysteem", "cost": 15},
 }
 
-# Basisprijs (vast bedrag dat bij de kosten wordt opgeteld)
-BASE_COST = 10
+# Vast uurtarief (kan worden aangepast)
+HOURLY_RATE = 75  # Standaard uurtarief in euro's
 
 # Helperfunctie: voertuiggegevens ophalen
 def fetch_vehicle_data(license_plate):
@@ -47,19 +47,20 @@ def fetch_vehicle_data(license_plate):
 
 # Helperfunctie: kosten berekenen
 def calculate_cost(work_selections):
-    # Totale kosten voor geselecteerde taken
-    total_task_cost = sum(
+    hourly_rate = session.get("hourly_rate", HOURLY_RATE)  # Gebruik sessie of standaard
+    task_cost = sum(
         TASKS[task]["cost"] for task, selected in work_selections.items() if selected
     )
-    # Voeg de basisprijs toe
-    total_cost = BASE_COST + total_task_cost
+    total_cost = task_cost + hourly_rate
     return round(total_cost, 2)
 
-# Helperfunctie: totale kosten incl. BTW
-def calculate_total_cost(payment_option, monthly_cost):
-    if payment_option == "yearly":
-        return round(monthly_cost * 12 * 1.21, 2)
-    return round(monthly_cost * 1.21, 2)
+# Dynamisch uurtarief instellen
+@app.route("/set-hourly-rate", methods=["POST"])
+def set_hourly_rate():
+    rate = request.form.get("hourly_rate")
+    if rate and rate.isdigit():
+        session["hourly_rate"] = int(rate)
+    return redirect(url_for("calculator"))
 
 # Route: Onderhoudskosten calculator
 @app.route("/", methods=["GET", "POST"])
@@ -78,53 +79,81 @@ def calculator():
         session["work_selections"] = {
             task: request.form.get(task) == "on" for task in TASKS
         }
-        session["monthly_cost"] = calculate_cost(session["work_selections"]) / 12
-
-        return redirect(url_for("customer_info"))
-
-    return render_template("calculator.html", tasks=TASKS, work_selections={})
-
-# Route: Klantgegevens
-@app.route("/customer-info", methods=["GET", "POST"])
-def customer_info():
-    if request.method == "POST":
-        if "back" in request.form:  # Handle "Vorige" button
-            return redirect(url_for("calculator"))
-
-        session["customer_data"] = {
-            "name": request.form.get("name"),
-            "address": request.form.get("address"),
-            "iban": request.form.get("iban"),
-            "signature": request.form.get("signature"),
-        }
-        session["payment_option"] = request.form.get("payment_option")
+        session["total_cost"] = calculate_cost(session["work_selections"])
+        session["monthly_cost"] = round(session["total_cost"] / 12, 2)  # Bereken maandelijkse kosten
 
         return redirect(url_for("summary"))
 
-    return render_template(
-        "customer_info.html",
-        monthly_cost=session.get("monthly_cost"),
-        yearly_cost=session.get("monthly_cost") * 12 * 1.21,
-    )
+    return render_template("calculator.html", tasks=TASKS, work_selections={})
 
 # Route: Overzicht
 @app.route("/summary", methods=["GET", "POST"])
 def summary():
     if request.method == "POST":
-        if "back" in request.form:  # Handle "Vorige" button
-            return redirect(url_for("customer_info"))
+        session["payment_option"] = request.form.get("payment_option")
+        return redirect(url_for("customer_info"))
 
-    total_cost = calculate_total_cost(
-        session.get("payment_option"), session.get("monthly_cost")
-    )
+    vehicle_data = session.get("vehicle_data")
+    if not vehicle_data:
+        return redirect(url_for("calculator"))  # Terug naar calculator als data ontbreekt
+
+    total_cost = session.get("total_cost")
+    monthly_cost = session.get("monthly_cost")
+    hourly_rate = session.get("hourly_rate", HOURLY_RATE)
     return render_template(
         "summary.html",
-        vehicle_data=session.get("vehicle_data"),
-        customer_data=session.get("customer_data"),
-        payment_option=session.get("payment_option"),
+        vehicle_data=vehicle_data,
         total_cost=total_cost,
-        base_cost=BASE_COST,
+        monthly_cost=monthly_cost,
+        hourly_rate=hourly_rate,
     )
 
+# Route: Klantgegevens
+@app.route("/customer-info", methods=["GET", "POST"])
+def customer_info():
+    vehicle_data = session.get("vehicle_data")
+    if not vehicle_data:
+        return redirect(url_for("calculator"))  # Terug naar calculator als data ontbreekt
+
+    if request.method == "POST":
+        session["customer_data"] = {
+            "name": request.form.get("name"),
+            "address": request.form.get("address"),
+            "email": request.form.get("email"),  # Nieuw e-mailveld toegevoegd
+            "iban": request.form.get("iban"),
+            "signature": request.form.get("signature"),
+        }
+        return redirect(url_for("confirmation"))
+
+    total_cost = session.get("total_cost")
+    monthly_cost = session.get("monthly_cost")
+    return render_template(
+        "customer_info.html",
+        vehicle_data=vehicle_data,
+        payment_option=session.get("payment_option"),
+        total_cost=total_cost,
+        monthly_cost=monthly_cost,
+    )
+
+# Route: Bevestiging
+@app.route("/confirmation", methods=["GET"])
+def confirmation():
+    customer_data = session.get("customer_data")
+    if not customer_data:
+        return redirect(url_for("customer_info"))  # Terug naar klantgegevens als data ontbreekt
+
+    total_cost = session.get("total_cost", 0)
+    monthly_cost = session.get("monthly_cost", 0)
+    payment_option = session.get("payment_option", "Niet opgegeven")
+
+    return render_template(
+        "confirmation.html",
+        customer_data=customer_data,
+        total_cost=total_cost,
+        monthly_cost=monthly_cost,
+        payment_option=payment_option,
+    )
+
+# Start de Flask-app
 if __name__ == "__main__":
     app.run(debug=True)

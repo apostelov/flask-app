@@ -8,24 +8,24 @@ body {
     display: flex; /* Enables flexbox layout */
     justify-content: center; /* Centers content horizontally */
     align-items: center; /* Centers content vertically */
-    height: 100vh; /* Ensures the page height fits the viewport */
+    min-height: 100vh; /* Ensures the page height fits the viewport */
+    box-sizing: border-box; /* Includes padding and borders in element dimensions */
 }
 
 /* Styling the main container for content */
 .container {
     max-width: 600px; /* Limits the container width */
-    max-height: fit-content;
+    width: 90%; /* Responsive width */
     background-color: #ffffff; /* White background for the container */
-    border-radius: 25px; /* Rounded corners for a softer appearance */
+    border-radius: 20px; /* Rounded corners for a softer appearance */
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for depth */
-    padding: 25px; /* Space inside the container */
-    text-align: center; /* Centers text content inside the container */
+    padding: 40px; /* Space inside the container */
+    text-align: left; /* Aligns text to the left */
     overflow: hidden; /* Prevents content overflow outside the container */
 }
 
 /* Heading styles for uniform text appearance */
 h1, h2 {
-    text-align: center; /* Centers all headings */
     margin: 10px 0; /* Adds spacing above and below the headings */
     color: #003399; /* Dark blue color for headings */
 }
@@ -33,29 +33,41 @@ h1, h2 {
 h1 {
     font-size: 26px; /* Larger text size for primary headings */
     font-weight: 700; /* Bold font for emphasis */
+    text-align: left;
 }
 
 h2 {
-    font-size: 18px; /* Smaller text size for secondary headings */
-    font-weight: 400; /* Regular weight for subtler emphasis */
+    font-size: 22px; /* Smaller text size for secondary headings */
+    text-align: left;
+    font-weight: 500; /* Regular weight for subtler emphasis */
     color: #666; /* Light gray color for secondary headings */
+}
+
+/* Table styling for data presentation */
+table {
+    width: 100%; /* Table takes full width */
+    border-collapse: collapse; /* Removes gaps between cells */
+    margin-top: 20px; /* Adds spacing above the table */
+}
+
+th, td {
+    padding: 10px; /* Adds inner spacing for cells */
+    text-align: left; /* Aligns text to the left */
+    border: 1px solid #ddd; /* Adds a light border between cells */
+}
+
+th {
+    background-color: #003399; /* Dark blue background for table headers */
+    color: white; /* White text for contrast */
+    font-weight: bold; /* Emphasizes table headers */
 }
 
 /* Form styles for layout and appearance */
 form {
     display: flex; /* Uses flexbox for layout */
     flex-direction: column; /* Stacks elements vertically */
-    gap: 0px; /* Adds space between form elements */
-    align-items: center; /* Centers form elements */
-}
-
-/* Individual form row for aligning labels and inputs */
-form div {
-    display: flex; /* Enables flexbox layout */
-    justify-content: space-between; /* Spreads elements evenly */
-    align-items: center; /* Aligns elements vertically */
-    width: 100%; /* Full width of the container */
-    padding: 10px 0; /* Adds vertical spacing */
+    gap: 20px; /* Adds space between form elements */
+    align-items: flex-start; /* Aligns form elements to the left */
 }
 
 /* Styling for form labels */
@@ -66,9 +78,9 @@ label {
 }
 
 /* Input styles for text and number fields */
-input[type="text"], input[type="number"] {
-    width: 90%; /* Takes up most of the row width */
-    padding: 10px; /* Adds inner spacing for inputs */
+input[type="text"], input[type="number"], input[type="email"] {
+    width: 100%; /* Takes full width */
+    padding: 12px; /* Adds inner spacing for inputs */
     border: 1px solid #ccc; /* Light gray border */
     border-radius: 8px; /* Rounded corners for consistency */
     background-color: #f7f7f7; /* Light background for input fields */
@@ -78,7 +90,7 @@ input[type="text"], input[type="number"] {
 }
 
 /* Focus state for inputs to improve accessibility */
-input[type="text"]:focus, input[type="number"]:focus {
+input:focus {
     border-color: #003399; /* Highlighted border color */
     outline: none; /* Removes the default outline */
 }
@@ -103,63 +115,19 @@ button:hover {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow effect */
 }
 
-/* Toggle switch styles */
-.toggle-wrapper {
-    position: relative; /* Allows absolute positioning within */
-    width: 60px; /* Width of the toggle switch */
-    height: 10px; /* Height of the toggle switch */
-}
-
-/* Hide default toggle input */
-.toggle-wrapper input {
-    opacity: 0; /* Makes the input invisible */
-    width: 0; /* Removes visual presence */
-    height: 0; /* Removes visual presence */
-}
-
-/* Slider style for toggle switch */
-.slider {
-    position: absolute; /* Positioned inside the wrapper */
-    cursor: pointer; /* Pointer cursor for interaction */
-    top: 0; /* Aligns to the top of the wrapper */
-    left: 0; /* Aligns to the left of the wrapper */
-    right: 0; /* Stretches to the right */
-    bottom: 0; /* Stretches to the bottom */
-    background-color: #ccc; /* Default gray background */
-    transition: 0.4s; /* Smooth transition for toggle */
-    border-radius: 30px; /* Rounded slider */
-}
-
-/* Circular toggle handle */
-.slider:before {
-    position: absolute; /* Positioned inside the slider */
-    content: ''; /* Empty content for visual */
-    height: 26px; /* Height of the circle */
-    width: 26px; /* Width of the circle */
-    left: 2px; /* Spacing from the left edge */
-    bottom: 2px; /* Spacing from the bottom edge */
-    background-color: white; /* White toggle button */
-    transition: 0.4s; /* Smooth movement */
-    border-radius: 50%; /* Fully rounded circle */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Adds shadow for depth */
-}
-
-/* Checked state for the toggle */
-input:checked + .slider {
-    background-color: #003399; /* Blue background for active state */
-}
-
-/* Checked state for the toggle handle */
-input:checked + .slider:before {
-    transform: translateX(30px); /* Moves the toggle button */
-}
-
-/* Footer styling for additional information */
+/* Footer styling */
 footer {
     text-align: center; /* Centers the footer text */
     margin-top: 20px; /* Adds spacing above the footer */
     font-size: 14px; /* Smaller font size for footer text */
     color: #666; /* Light gray color */
+}
+
+/* Print and mail button styling */
+button.print, button.mail {
+    margin: 10px 0; /* Adds spacing above and below buttons */
+    background-color: #ffcc00; /* Yellow background for action buttons */
+    color: #333; /* Dark text for contrast */
 }
 
 /* Custom styles for the license plate input */
@@ -175,4 +143,31 @@ footer {
 .license_plate:focus {
     border-color: #003399; /* Blue border on focus for consistency */
     outline: none; /* Removes the default focus outline */
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+th, td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+th {
+    background-color: #003399;
+    color: white;
+}
+.button-group button {
+    margin: 10px 5px;
+    padding: 10px 20px;
+    background-color: #003399;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+.button-group button:hover {
+    background-color: #001f66;
 }

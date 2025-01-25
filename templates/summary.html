@@ -3,38 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Overzicht</title>
+    <title>Kostenoverzicht</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Bavarian Motors - Overzicht</h1>
-        
+        <h1>Bavarian Motors - Kostenoverzicht</h1>
+
+        <!-- Overzicht voertuiggegevens -->
         <h2>Voertuiggegevens</h2>
-        <p>Kenteken: {{ vehicle_data.license_plate }}</p>
-        <p>Model: {{ vehicle_data.model }}</p>
-        <p>Bouwjaar: {{ vehicle_data.year }}</p>
-        <p>APK-vervaldatum: {{ vehicle_data.apk_expiration }}</p>
+        <p>Kenteken: <strong>{{ vehicle_data.license_plate }}</strong></p>
+        <p>Model: <strong>{{ vehicle_data.model }}</strong></p>
+        <p>Bouwjaar: <strong>{{ vehicle_data.year }}</strong></p>
+        <p>APK-vervaldatum: <strong>{{ vehicle_data.apk_expiration }}</strong></p>
 
-        <h2>Klantgegevens</h2>
-        <p>Naam: {{ customer_data.name }}</p>
-        <p>Adres: {{ customer_data.address }}</p>
-        <p>IBAN: {{ customer_data.iban }}</p>
-        <p>Akkoord met de voorwaarden: {{ customer_data.signature }}</p>
-
+        <!-- Overzicht kosten -->
         <h2>Kosten</h2>
-        <p>Gekozen betalingsoptie: {{ payment_option }}</p>
-        <p>Totale kosten incl. BTW: €{{ total_cost }}</p>
+        <p>Totale kosten: <strong>€{{ total_cost }}</strong></p> 
+        <p>Kosten per maand: <strong>€{{ monthly_cost }}</strong></p>
 
+        <!-- Keuze betalingsoptie -->
         <form method="POST">
-            <button type="submit" name="back">Vorige</button>
-            <button type="button" onclick="window.print()">Print Offerte</button>
+            <h3>Kies een betalingsoptie:</h3>
+            <label for="monthly">
+                <input type="radio" id="monthly" name="payment_option" value="monthly" required> Maandelijks incl. BTW
+            </label>
+            <label for="yearly">
+                <input type="radio" id="yearly" name="payment_option" value="yearly"> Jaarlijks incl. BTW
+            </label>
+
+            <!-- Navigatieknoppen -->
+            <div>
+                <button type="submit" formaction="{{ url_for('calculator') }}">Vorige</button>
+                <button type="submit">Volgende</button>
+            </div>
         </form>
+
         <footer>
             <p>&copy; 2025 Bavarian Motors. All rights reserved.</p>
         </footer>
     </div>
-    
-    
 </body>
 </html>

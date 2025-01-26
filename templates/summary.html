@@ -19,17 +19,17 @@
 
         <!-- Overzicht kosten -->
         <h2>Kosten</h2>
-        <p>Totale kosten: <strong>€{{ total_cost }}</strong></p> 
+        <p>Kostem per jaar: <strong>€{{ annual_cost }}</strong></p> 
         <p>Kosten per maand: <strong>€{{ monthly_cost }}</strong></p>
 
         <!-- Keuze betalingsoptie -->
         <form method="POST">
             <h3>Kies een betalingsoptie:</h3>
-            <label for="monthly">
-                <input type="radio" id="monthly" name="payment_option" value="monthly" required> Maandelijks incl. BTW
+            <label for="Maandelijks">
+                <input type="radio" id="Maandelijks" name="payment_option" value="Maandelijks" required> Maandelijks incl. BTW
             </label>
-            <label for="yearly">
-                <input type="radio" id="yearly" name="payment_option" value="yearly"> Jaarlijks incl. BTW
+            <label for="Jaarlijks">
+                <input type="radio" id="Jaarlijks" name="payment_option" value="Jaarlijks"> Jaarlijks incl. BTW
             </label>
 
             <!-- Navigatieknoppen -->

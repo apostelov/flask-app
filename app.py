@@ -51,8 +51,8 @@ def calculate_cost(work_selections):
     task_cost = sum(
         TASKS[task]["cost"] for task, selected in work_selections.items() if selected
     )
-    total_cost = task_cost + hourly_rate
-    return round(total_cost, 2)
+    annual_cost = task_cost + hourly_rate
+    return round(annual_cost, 2)
 
 # Dynamisch uurtarief instellen
 @app.route("/set-hourly-rate", methods=["POST"])
@@ -79,8 +79,8 @@ def calculator():
         session["work_selections"] = {
             task: request.form.get(task) == "on" for task in TASKS
         }
-        session["total_cost"] = calculate_cost(session["work_selections"])
-        session["monthly_cost"] = round(session["total_cost"] / 12, 2)  # Bereken maandelijkse kosten
+        session["annual_cost"] = calculate_cost(session["work_selections"])
+        session["monthly_cost"] = round(session["annual_cost"] / 12, 2)  # Bereken maandelijkse kosten
 
         return redirect(url_for("summary"))
 
@@ -97,13 +97,13 @@ def summary():
     if not vehicle_data:
         return redirect(url_for("calculator"))  # Terug naar calculator als data ontbreekt
 
-    total_cost = session.get("total_cost")
+    annual_cost = session.get("annual_cost")
     monthly_cost = session.get("monthly_cost")
     hourly_rate = session.get("hourly_rate", HOURLY_RATE)
     return render_template(
         "summary.html",
         vehicle_data=vehicle_data,
-        total_cost=total_cost,
+        annual_cost=annual_cost,
         monthly_cost=monthly_cost,
         hourly_rate=hourly_rate,
     )
@@ -125,13 +125,13 @@ def customer_info():
         }
         return redirect(url_for("confirmation"))
 
-    total_cost = session.get("total_cost")
+    annual_cost = session.get("annual_cost")
     monthly_cost = session.get("monthly_cost")
     return render_template(
         "customer_info.html",
         vehicle_data=vehicle_data,
         payment_option=session.get("payment_option"),
-        total_cost=total_cost,
+        annual_cost=annual_cost,
         monthly_cost=monthly_cost,
     )
 
@@ -142,14 +142,14 @@ def confirmation():
     if not customer_data:
         return redirect(url_for("customer_info"))  # Terug naar klantgegevens als data ontbreekt
 
-    total_cost = session.get("total_cost", 0)
+    annual_cost = session.get("annual_cost", 0)
     monthly_cost = session.get("monthly_cost", 0)
     payment_option = session.get("payment_option", "Niet opgegeven")
 
     return render_template(
         "confirmation.html",
         customer_data=customer_data,
-        total_cost=total_cost,
+        annual_cost=annual_cost,
         monthly_cost=monthly_cost,
         payment_option=payment_option,
     )

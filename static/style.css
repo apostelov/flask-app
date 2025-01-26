@@ -1,163 +1,135 @@
 /* General styles for the body of the document */
 body {
-    font-family: 'Roboto', sans-serif; /* Sets the font style to Roboto */
-    margin: 0; /* Removes default margin */
-    padding: 0; /* Removes default padding */
-    background-color: #f9f9f9; /* Light gray background color for the page */
-    color: #333; /* Sets the text color to dark gray for readability */
-    display: flex; /* Enables flexbox layout */
-    justify-content: center; /* Centers content horizontally */
-    align-items: center; /* Centers content vertically */
-    min-height: 100vh; /* Ensures the page height fits the viewport */
-    box-sizing: border-box; /* Includes padding and borders in element dimensions */
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    box-sizing: border-box;
 }
 
 /* Styling the main container for content */
 .container {
-    max-width: 600px; /* Limits the container width */
-    width: 90%; /* Responsive width */
-    background-color: #ffffff; /* White background for the container */
-    border-radius: 20px; /* Rounded corners for a softer appearance */
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for depth */
-    padding: 40px; /* Space inside the container */
-    text-align: left; /* Aligns text to the left */
-    overflow: hidden; /* Prevents content overflow outside the container */
+    max-width: 600px;
+    width: 90%;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    text-align: left;
+    overflow: hidden;
 }
 
-/* Heading styles for uniform text appearance */
+/* Heading styles */
 h1, h2 {
-    margin: 10px 0; /* Adds spacing above and below the headings */
-    color: #003399; /* Dark blue color for headings */
+    margin: 10px 0;
+    color: #003399;
 }
 
 h1 {
-    font-size: 26px; /* Larger text size for primary headings */
-    font-weight: 700; /* Bold font for emphasis */
-    text-align: left;
+    font-size: 26px;
+    font-weight: 700;
 }
 
 h2 {
-    font-size: 22px; /* Smaller text size for secondary headings */
-    text-align: left;
-    font-weight: 500; /* Regular weight for subtler emphasis */
-    color: #666; /* Light gray color for secondary headings */
+    font-size: 22px;
+    font-weight: 500;
+    color: #666;
 }
 
-/* Table styling for data presentation */
-table {
-    width: 100%; /* Table takes full width */
-    border-collapse: collapse; /* Removes gaps between cells */
-    margin-top: 20px; /* Adds spacing above the table */
-}
-
-th, td {
-    padding: 10px; /* Adds inner spacing for cells */
-    text-align: left; /* Aligns text to the left */
-    border: 1px solid #ddd; /* Adds a light border between cells */
-}
-
-th {
-    background-color: #003399; /* Dark blue background for table headers */
-    color: white; /* White text for contrast */
-    font-weight: bold; /* Emphasizes table headers */
-}
-
-/* Form styles for layout and appearance */
+/* Form styling */
 form {
-    display: flex; /* Uses flexbox for layout */
-    flex-direction: column; /* Stacks elements vertically */
-    gap: 20px; /* Adds space between form elements */
-    align-items: flex-start; /* Aligns form elements to the left */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
 }
 
-/* Styling for form labels */
+/* Styling for form labels with checkboxes */
+form div {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Adds space between checkbox and label text */
+}
+
+input[type="checkbox"] {
+    width: 20px; /* Adjust size of the checkbox */
+    height: 20px;
+    margin: 0; /* Ensures no extra spacing */
+}
+
+/* Styling for labels */
 label {
-    font-size: 20px; /* Sets the font size for labels */
-    color: #333; /* Dark gray color for readability */
-    cursor: pointer; /* Changes cursor to pointer on hover */
+    font-size: 18px;
+    color: #333;
+    cursor: pointer;
 }
 
-/* Input styles for text and number fields */
+/* Input styles */
 input[type="text"], input[type="number"], input[type="email"] {
-    width: 100%; /* Takes full width */
-    padding: 12px; /* Adds inner spacing for inputs */
-    border: 1px solid #ccc; /* Light gray border */
-    border-radius: 8px; /* Rounded corners for consistency */
-    background-color: #f7f7f7; /* Light background for input fields */
-    font-size: 16px; /* Standard text size */
-    text-align: left; /* Aligns input text to the left */
-    text-transform: uppercase; /* Transforms input text to uppercase */
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #060606;
+    border-radius: 8px;
+    background-color: #f7f7f7;
+    font-size: 16px;
 }
 
-/* Focus state for inputs to improve accessibility */
 input:focus {
-    border-color: #003399; /* Highlighted border color */
-    outline: none; /* Removes the default outline */
+    border-color: #003399;
+    outline: none;
 }
 
-/* Button styles for form actions */
+/* Buttons */
 button {
-    padding: 12px 24px; /* Adjusts button size */
-    border: none; /* Removes default border */
-    border-radius: 25px; /* Rounded button appearance */
-    background-color: #003399; /* Primary button color */
-    color: #fff; /* White text for contrast */
-    cursor: pointer; /* Pointer cursor on hover */
-    font-size: 16px; /* Sets button font size */
-    font-weight: 700; /* Bold text for emphasis */
-    transition: all 0.3s ease; /* Smooth hover effects */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a shadow for depth */
+    padding: 12px 24px;
+    border: none;
+    border-radius: 25px;
+    background-color: #003399;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Hover state for buttons */
 button:hover {
-    background-color: #001f66; /* Darker blue on hover */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow effect */
+    background-color: #001f66;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Footer styling */
+/* Footer */
 footer {
-    text-align: center; /* Centers the footer text */
-    margin-top: 20px; /* Adds spacing above the footer */
-    font-size: 14px; /* Smaller font size for footer text */
-    color: #666; /* Light gray color */
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #666;
 }
 
-/* Print and mail button styling */
-button.print, button.mail {
-    margin: 10px 0; /* Adds spacing above and below buttons */
-    background-color: #ffcc00; /* Yellow background for action buttons */
-    color: #333; /* Dark text for contrast */
-}
-
-/* Custom styles for the license plate input */
-.license_plate {
-    background-color: #ffcc00; /* Bright yellow background for visibility */
-    color: #000000; /* Black text for contrast */
-    font-weight: bold; /* Bold text for prominence */
-    text-transform: uppercase; /* Ensures text is displayed in uppercase */
-    border: 1px solid #000000; /* Black border for definition */
-}
-
-/* Focus state for the license plate input */
-.license_plate:focus {
-    border-color: #003399; /* Blue border on focus for consistency */
-    outline: none; /* Removes the default focus outline */
-}
+/* Table styling */
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
+
 th, td {
     padding: 10px;
     text-align: left;
     border: 1px solid #ddd;
 }
+
 th {
     background-color: #003399;
     color: white;
 }
+
+/* Button group */
 .button-group button {
     margin: 10px 5px;
     padding: 10px 20px;
@@ -168,6 +140,17 @@ th {
     cursor: pointer;
     font-size: 16px;
 }
+
 .button-group button:hover {
     background-color: #001f66;
+}
+
+/* Specifieke styling voor het kenteken invoerveld */
+input#license_plate.license_plate {
+    text-transform: uppercase; /* Zet tekst in hoofdletters */
+    color: #000; /* Zwarte tekstkleur */
+    background-color: #ffa500; /* Oranje achtergrondkleur */
+    border: 1px solid #000; /* Zwarte rand */
+    border-radius: 5px; /* Ronde hoeken */
+    padding: 10px; /* Binnenruimte */
 }

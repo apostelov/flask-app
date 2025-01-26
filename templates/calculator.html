@@ -10,11 +10,13 @@
     <div class="container">
         <h1>Bavarian Motors - Onderhoudskosten Calculator</h1>
 
+        <!-- Foutmelding weergeven, indien aanwezig -->
         {% if error %}
             <p class="error-message">{{ error }}</p>
         {% endif %}
 
         <form method="POST">
+            <!-- Kenteken invoerveld -->
             <label for="license_plate">Kenteken:</label>
             <input 
                 type="text" 
@@ -23,21 +25,19 @@
                 value="{{ vehicle_data.license_plate if vehicle_data else '' }}" 
                 required 
                 placeholder="Vul hier het kenteken in"
+                class="license_plate"
             >
 
             <h2>Werkzaamheden:</h2>
             {% for task, data in tasks.items() %}
-            <div>
+            <div class="task-item">
+                <input 
+                    type="checkbox" 
+                    name="{{ task }}" 
+                    id="{{ task }}" 
+                    {% if work_selections.get(task) %}checked{% endif %}
+                >
                 <label for="{{ task }}">{{ data.label }}</label>
-                <div class="toggle-wrapper">
-                    <input 
-                        type="checkbox" 
-                        name="{{ task }}" 
-                        id="{{ task }}" 
-                        {% if work_selections.get(task) %}checked{% endif %}
-                    >
-                    <span class="slider"></span>
-                </div>
             </div>
             {% endfor %}
 
@@ -47,6 +47,5 @@
             <p>&copy; 2025 Bavarian Motors. All rights reserved.</p>
         </footer>
     </div>
-    
 </body>
 </html>

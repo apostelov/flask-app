@@ -13,6 +13,18 @@
         <h2>Overzicht van uw gegevens</h2>
         <table>
             <tr>
+                <th>Kenteken</th>
+                <td>{{ vehicle_data.license_plate }}</td>
+            </tr>
+            <tr>
+                <th>Model</th>
+                <td>{{ vehicle_data.model }}</td>
+            </tr>
+            <tr>
+                <th>Bouwjaar</th>
+                <td>{{ vehicle_data.year }}</td>
+            </tr>
+            <tr>
                 <th>Naam</th>
                 <td>{{ customer_data.name }}</td>
             </tr>
@@ -24,7 +36,7 @@
                 <th>E-mail</th>
                 <td>{{ customer_data.email }}</td>
             </tr>
-            
+            <tr>
                 <th>IBAN</th>
                 <td>{{ customer_data.iban }}</td>
             </tr>
@@ -33,19 +45,26 @@
                 <td>{{ payment_option }}</td>
             </tr>
             <tr>
-                <th>Totale kosten</th>
-                <td>€{{ annual_cost }}</td>
+                <th>Totale kosten (per jaar excl. BTW)</th>
+                <td>€{{ annual_cost_excl_vat }}</td>
             </tr>
             <tr>
-                <th>Kosten per maand (incl. BTW)</th>
-                <td>€{{ monthly_cost }}</td>
+                <th>Totale kosten (per jaar incl. BTW)</th>
+                <td>€{{ annual_cost_incl_vat }}</td>
+            </tr>
+            <tr>
+                <th>Kosten per maand excl. BTW</th>
+                <td>€{{ monthly_cost_excl_vat }}</td>
+            </tr>
+            <tr>
+                <th>Kosten per maand incl. BTW</th>
+                <td>€{{ monthly_cost_incl_vat }}</td>
             </tr>
         </table>
 
-        <!-- Actieknoppen -->
         <div class="button-group">
-            <button class="print" onclick="window.print()">Print</button>
-            </button>
+            <button type="button" onclick="window.print()">Print</button>
+            <button type="button" onclick="location.href='mailto:?subject=Bavarian Motors Kostenoverzicht&body=Hier is uw kostenoverzicht: {{ customer_data }}'">E-mail</button>
         </div>
 
         <footer>

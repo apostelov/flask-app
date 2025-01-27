@@ -147,10 +147,21 @@ th {
 
 /* Specifieke styling voor het kenteken invoerveld */
 input#license_plate.license_plate {
+    max-width: 200px;
     text-transform: uppercase; /* Zet tekst in hoofdletters */
     color: #000; /* Zwarte tekstkleur */
     background-color: #ffa500; /* Oranje achtergrondkleur */
     border: 1px solid #000; /* Zwarte rand */
     border-radius: 5px; /* Ronde hoeken */
     padding: 10px; /* Binnenruimte */
+}
+.error-message {
+    color: rgb(255, 255, 255);
+    margin: 10px 5px;
+    padding: 10px 20px;
+    background-color: #ff0000; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
 }

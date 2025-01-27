@@ -19,8 +19,10 @@
 
         <!-- Overzicht kosten -->
         <h2>Kosten</h2>
-        <p>Kostem per jaar: <strong>€{{ annual_cost }}</strong></p> 
-        <p>Kosten per maand: <strong>€{{ monthly_cost }}</strong></p>
+        <p>Kosten per jaar excl. BTW: <strong>€{{ annual_cost_excl_vat }}</strong></p>
+        <p>Kosten per jaar incl. BTW: <strong>€{{ annual_cost_incl_vat }}</strong></p>
+        <p>Kosten per maand excl. BTW: <strong>€{{ monthly_cost_excl_vat }}</strong></p>
+        <p>Kosten per maand incl. BTW: <strong>€{{ monthly_cost_incl_vat }}</strong></p>
 
         <!-- Keuze betalingsoptie -->
         <form method="POST">

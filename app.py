@@ -1,8 +1,15 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import requests
+import os
+import re
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = "5zli3ji59h320xyeu6bss5s9uobd2l5pio03fdbc7cb4jyy9ws"
+app.secret_key = os.environ.get("SECRET_KEY")
+if not app.secret_key:
+    raise RuntimeError("SECRET_KEY is not set. Maak een .env bestand aan met SECRET_KEY=...")
 
 # RDW API URL
 RDW_API_URL = "https://opendata.rdw.nl/resource/m9d7-ebf2.json"
@@ -28,6 +35,16 @@ HOURLY_RATE = 85  # Standaard uurtarief in euro's
 
 # VAT percentage
 VAT_RATE = 0.21  # 21%
+
+# Helperfunctie: IBAN validatie
+def validate_iban(iban: str) -> bool:
+    iban = iban.replace(" ", "").upper()
+    if not re.match(r'^[A-Z]{2}[0-9]{2}[A-Z0-9]{4,}$', iban):
+        return False
+    # Verplaats de eerste 4 tekens naar achteren en converteer naar cijfers
+    rearranged = iban[4:] + iban[:4]
+    numeric = "".join(str(ord(c) - 55) if c.isalpha() else c for c in rearranged)
+    return int(numeric) % 97 == 1
 
 # Helperfunctie: voertuiggegevens ophalen
 def fetch_vehicle_data(license_plate):
@@ -153,11 +170,24 @@ def customer_info():
         return redirect(url_for("calculator"))
 
     if request.method == "POST":
+        iban = request.form.get("iban", "").strip()
+        if not validate_iban(iban):
+            return render_template(
+                "customer_info.html",
+                vehicle_data=vehicle_data,
+                payment_option=session.get("payment_option"),
+                annual_cost_excl_vat=session.get("annual_cost_excl_vat"),
+                annual_cost_incl_vat=session.get("annual_cost_incl_vat"),
+                monthly_cost_excl_vat=session.get("monthly_cost_excl_vat"),
+                monthly_cost_incl_vat=session.get("monthly_cost_incl_vat"),
+                error="Ongeldig IBAN. Controleer het rekeningnummer (bijv. NL91 ABNA 0417 1643 00).",
+                form_data=request.form,
+            )
         session["customer_data"] = {
             "name": request.form.get("name"),
             "address": request.form.get("address"),
             "email": request.form.get("email"),
-            "iban": request.form.get("iban"),
+            "iban": iban.replace(" ", "").upper(),
             "signature": request.form.get("signature"),
         }
         return redirect(url_for("confirmation"))

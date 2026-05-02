@@ -1,49 +1,117 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kostenoverzicht</title>
+    <title>Bavarian Motors — Kostenoverzicht</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Bavarian Motors - Kostenoverzicht</h1>
 
-        <!-- Overzicht voertuiggegevens -->
-        <h2>Voertuiggegevens</h2>
-        <p>Kenteken: <strong>{{ vehicle_data.license_plate }}</strong></p>
-        <p>Model: <strong>{{ vehicle_data.model }}</strong></p>
-        <p>Bouwjaar: <strong>{{ vehicle_data.year }}</strong></p>
-        <p>APK-vervaldatum: <strong>{{ vehicle_data.apk_expiration }}</strong></p>
+    <nav class="top-nav">
+        <a href="/" class="top-nav__logo">
+            <span class="top-nav__badge">BM</span>
+            Bavarian Motors
+        </a>
+    </nav>
 
-        <!-- Overzicht kosten -->
-        <h2>Kosten</h2>
-        <p>Kosten per jaar excl. BTW: <strong>€{{ annual_cost_excl_vat }}</strong></p>
-        <p>Kosten per jaar incl. BTW: <strong>€{{ annual_cost_incl_vat }}</strong></p>
-        <p>Kosten per maand excl. BTW: <strong>€{{ monthly_cost_excl_vat }}</strong></p>
-        <p>Kosten per maand incl. BTW: <strong>€{{ monthly_cost_incl_vat }}</strong></p>
+    <div class="progress-bar">
+        <div class="progress-step done">
+            <div class="progress-step__num">1</div>
+            <span>Calculator</span>
+        </div>
+        <div class="progress-divider"></div>
+        <div class="progress-step active">
+            <div class="progress-step__num">2</div>
+            <span>Overzicht</span>
+        </div>
+        <div class="progress-divider"></div>
+        <div class="progress-step">
+            <div class="progress-step__num">3</div>
+            <span>Gegevens</span>
+        </div>
+        <div class="progress-divider"></div>
+        <div class="progress-step">
+            <div class="progress-step__num">4</div>
+            <span>Bevestiging</span>
+        </div>
+    </div>
 
-        <!-- Keuze betalingsoptie -->
-        <form method="POST">
-            <h3>Kies een betalingsoptie:</h3>
-            <label for="Maandelijks">
-                <input type="radio" id="Maandelijks" name="payment_option" value="Maandelijks" required> Maandelijks incl. BTW
-            </label>
-            <label for="Jaarlijks">
-                <input type="radio" id="Jaarlijks" name="payment_option" value="Jaarlijks"> Jaarlijks incl. BTW
-            </label>
+    <div class="hero-band">
+        <h1>Kostenoverzicht</h1>
+        <p>{{ vehicle_data.model }} · {{ vehicle_data.year }} · {{ vehicle_data.license_plate }}</p>
+    </div>
 
-            <!-- Navigatieknoppen -->
-            <div>
-                <button type="submit" formaction="{{ url_for('calculator') }}">Vorige</button>
-                <button type="submit">Volgende</button>
+    <main class="page-body">
+
+        <p class="section-label">Voertuiggegevens</p>
+        <div class="card card--soft">
+            <table>
+                <tr>
+                    <th>Kenteken</th>
+                    <td><strong>{{ vehicle_data.license_plate }}</strong></td>
+                </tr>
+                <tr>
+                    <th>Model</th>
+                    <td>{{ vehicle_data.model }}</td>
+                </tr>
+                <tr>
+                    <th>Bouwjaar</th>
+                    <td>{{ vehicle_data.year }}</td>
+                </tr>
+            </table>
+        </div>
+
+        <p class="section-label">Kostenberekening</p>
+        <div class="spec-grid">
+            <div class="spec-cell">
+                <div class="spec-cell__value">€{{ annual_cost_excl_vat }}</div>
+                <div class="spec-cell__label">Per jaar excl. BTW</div>
+            </div>
+            <div class="spec-cell">
+                <div class="spec-cell__value">€{{ annual_cost_incl_vat }}</div>
+                <div class="spec-cell__label">Per jaar incl. BTW</div>
+            </div>
+            <div class="spec-cell">
+                <div class="spec-cell__value">€{{ monthly_cost_excl_vat }}</div>
+                <div class="spec-cell__label">Per maand excl. BTW</div>
+            </div>
+            <div class="spec-cell">
+                <div class="spec-cell__value">€{{ monthly_cost_incl_vat }}</div>
+                <div class="spec-cell__label">Per maand incl. BTW</div>
+            </div>
+        </div>
+
+        <form method="POST" style="margin-top: 32px;">
+            <p class="section-label">Betalingsoptie</p>
+
+            <div class="option-tile">
+                <input type="radio" id="maandelijks" name="payment_option" value="Maandelijks" required>
+                <label for="maandelijks">
+                    <strong>Maandelijks — €{{ monthly_cost_incl_vat }} / maand</strong>
+                    Automatische incasso per maand, incl. 21% BTW
+                </label>
+            </div>
+
+            <div class="option-tile">
+                <input type="radio" id="jaarlijks" name="payment_option" value="Jaarlijks">
+                <label for="jaarlijks">
+                    <strong>Jaarlijks — €{{ annual_cost_incl_vat }} / jaar</strong>
+                    Eénmalige betaling per jaar, incl. 21% BTW
+                </label>
+            </div>
+
+            <div class="btn-row">
+                <button type="submit" formaction="{{ url_for('calculator') }}" class="btn btn--secondary">← Vorige</button>
+                <button type="submit" class="btn btn--primary">Volgende →</button>
             </div>
         </form>
 
-        <footer>
-            <p>&copy; 2025 Bavarian Motors. All rights reserved.</p>
-        </footer>
-    </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Bavarian Motors. All rights reserved.</p>
+    </footer>
+
 </body>
 </html>

@@ -1,48 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Klantgegevens</title>
+    <title>Bavarian Motors — Klantgegevens</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Bavarian Motors - Klantgegevens</h1>
 
-        <!-- Bevestiging van de gekozen betalingsoptie -->
-        <p>Gekozen betalingsoptie: <strong>{{ payment_option }}</strong></p>
+    <nav class="top-nav">
+        <a href="/" class="top-nav__logo">
+            <span class="top-nav__badge">BM</span>
+            Bavarian Motors
+        </a>
+    </nav>
+
+    <div class="progress-bar">
+        <div class="progress-step done">
+            <div class="progress-step__num">1</div>
+            <span>Calculator</span>
+        </div>
+        <div class="progress-divider"></div>
+        <div class="progress-step done">
+            <div class="progress-step__num">2</div>
+            <span>Overzicht</span>
+        </div>
+        <div class="progress-divider"></div>
+        <div class="progress-step active">
+            <div class="progress-step__num">3</div>
+            <span>Gegevens</span>
+        </div>
+        <div class="progress-divider"></div>
+        <div class="progress-step">
+            <div class="progress-step__num">4</div>
+            <span>Bevestiging</span>
+        </div>
+    </div>
+
+    <div class="hero-band">
+        <h1>Klantgegevens</h1>
+        <p>Gekozen betalingsoptie: {{ payment_option }} — €{% if payment_option == 'Maandelijks' %}{{ monthly_cost_incl_vat }} / maand{% else %}{{ annual_cost_incl_vat }} / jaar{% endif %}</p>
+    </div>
+
+    <main class="page-body">
 
         <form method="POST">
-            <!-- Klantgegevens invoer -->
-            <label for="name">Naam:</label>
-            <input type="text" id="name" name="name" required>
 
-            <label for="address">Adres:</label>
-            <input type="text" id="address" name="address" required>
-
-            <label for="email">E-mail:</label>
-            <input type="email" id="email" name="email" required>
-
-            <label for="iban">IBAN:</label>
-            <input type="text" id="iban" name="iban" required>
-
-            <!-- Voorwaarden akkoord -->
-            <h2>Ik ga akkoord met de voorwaarden:</h2>
-            <label>
-                <input type="checkbox" id="signature" name="signature" value="Akkoord" required> Akkoord
-            </label>
-
-            <!-- Navigatieknoppen -->
-            <div>
-                <button type="submit" formaction="{{ url_for('summary') }}">Vorige</button>
-                <button type="submit">Bevestigen</button>
+            <p class="section-label">Persoonlijke gegevens</p>
+            <div class="card">
+                <div class="form-group">
+                    <label for="name">Naam</label>
+                    <input type="text" id="name" name="name" required placeholder="Voor- en achternaam">
+                </div>
+                <div class="form-group">
+                    <label for="address">Adres</label>
+                    <input type="text" id="address" name="address" required placeholder="Straat, huisnummer, postcode, stad">
+                </div>
+                <div class="form-group">
+                    <label for="email">E-mailadres</label>
+                    <input type="email" id="email" name="email" required placeholder="naam@voorbeeld.nl">
+                </div>
+                <div class="form-group">
+                    <label for="iban">IBAN</label>
+                    <input type="text" id="iban" name="iban" required placeholder="NL00 BANK 0000 0000 00">
+                </div>
             </div>
+
+            <p class="section-label">Akkoordverklaring</p>
+            <div class="task-item">
+                <input type="checkbox" id="signature" name="signature" value="Akkoord" required>
+                <label for="signature">
+                    Ik ga akkoord met de algemene voorwaarden van Bavarian Motors en geef toestemming voor de automatische incasso.
+                </label>
+            </div>
+
+            <div class="btn-row">
+                <button type="submit" formaction="{{ url_for('summary') }}" class="btn btn--secondary">← Vorige</button>
+                <button type="submit" class="btn btn--primary">Bevestigen →</button>
+            </div>
+
         </form>
 
-        <footer>
-            <p>&copy; 2025 Bavarian Motors. All rights reserved.</p>
-        </footer>
-    </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Bavarian Motors. All rights reserved.</p>
+    </footer>
+
 </body>
 </html>

@@ -33,7 +33,7 @@ VAT_RATE = 0.21  # 21%
 def fetch_vehicle_data(license_plate):
     try:
         license_plate = license_plate.replace(" ", "").upper()
-        response = requests.get(RDW_API_URL, params={"kenteken": license_plate})
+        response = requests.get(RDW_API_URL, params={"kenteken": license_plate}, timeout=5)
         response.raise_for_status()
         data = response.json()
         if data:
@@ -78,10 +78,18 @@ def calculate_cost(work_selections, vehicle_data):
 @app.route("/", methods=["GET", "POST"])
 def calculator():
     if request.method == "POST":
-        license_plate = request.form.get("license_plate")
+        license_plate = request.form.get("license_plate", "").strip()
+
+        if not license_plate:
+            return render_template(
+                "calculator.html",
+                tasks=TASKS,
+                error="Voer een geldig kenteken in.",
+                work_selections={}
+            )
+
         vehicle_data = fetch_vehicle_data(license_plate)
 
-        # Handle cases where vehicle_data is None
         if vehicle_data is None:
             return render_template(
                 "calculator.html",
@@ -90,16 +98,14 @@ def calculator():
                 work_selections={}
             )
 
-        # Handle cases where an error exists in vehicle_data
         if "error" in vehicle_data:
             return render_template(
                 "calculator.html",
                 tasks=TASKS,
-                error=vehicle_data["error"],  # Display specific error
+                error=vehicle_data["error"],
                 work_selections={}
             )
 
-        # Save vehicle data and selections in session
         session["vehicle_data"] = vehicle_data
         session["work_selections"] = {
             task: request.form.get(task) == "on" for task in TASKS
@@ -112,10 +118,12 @@ def calculator():
 
         return redirect(url_for("summary"))
 
-    return render_template("calculator.html", tasks=TASKS, work_selections={})
-
-# Other routes remain unchanged
-# ...
+    return render_template(
+        "calculator.html",
+        tasks=TASKS,
+        work_selections=session.get("work_selections", {}),
+        vehicle_data=session.get("vehicle_data"),
+    )
 
 # Route: Overzicht
 @app.route("/summary", methods=["GET", "POST"])

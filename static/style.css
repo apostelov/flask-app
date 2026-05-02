@@ -283,6 +283,24 @@ input#license_plate {
   color: var(--body);
   cursor: pointer;
   line-height: 1.4;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.task-cost {
+  margin-left: auto;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.task-cost--dynamic {
+  font-weight: 400;
+  color: var(--muted);
+  font-style: italic;
 }
 
 /* ── Radio Options ───────────────────────────────────────────────────── */

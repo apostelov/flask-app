@@ -66,6 +66,9 @@
             </div>
 
             <p class="section-label">Werkzaamheden selecteren</p>
+            <p style="font-size:13px;color:var(--muted);margin-bottom:16px;font-weight:300;">
+                Basistarieven: €85 uurtarief. Alle prijzen zijn excl. 21% BTW.
+            </p>
 
             {% for task, data in tasks.items() %}
             <div class="task-item">
@@ -75,7 +78,16 @@
                     id="{{ task }}"
                     {% if work_selections.get(task) %}checked{% endif %}
                 >
-                <label for="{{ task }}">{{ data.label }}</label>
+                <label for="{{ task }}">
+                    {{ data.label }}
+                    {% if data.cost > 0 %}
+                        <span class="task-cost">€{{ data.cost }}</span>
+                    {% elif task == 'oil_change' %}
+                        <span class="task-cost task-cost--dynamic">op basis van motorinhoud</span>
+                    {% elif task == 'spark_plug_replacement' %}
+                        <span class="task-cost task-cost--dynamic">op basis van cilinders</span>
+                    {% endif %}
+                </label>
             </div>
             {% endfor %}
 

@@ -1,8 +1,15 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import requests
+import os
+import re
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = "5zli3ji59h320xyeu6bss5s9uobd2l5pio03fdbc7cb4jyy9ws"
+app.secret_key = os.environ.get("SECRET_KEY")
+if not app.secret_key:
+    raise RuntimeError("SECRET_KEY is not set. Maak een .env bestand aan met SECRET_KEY=...")
 
 # RDW API URL
 RDW_API_URL = "https://opendata.rdw.nl/resource/m9d7-ebf2.json"
@@ -29,11 +36,21 @@ HOURLY_RATE = 85  # Standaard uurtarief in euro's
 # VAT percentage
 VAT_RATE = 0.21  # 21%
 
+# Helperfunctie: IBAN validatie
+def validate_iban(iban: str) -> bool:
+    iban = iban.replace(" ", "").upper()
+    if not re.match(r'^[A-Z]{2}[0-9]{2}[A-Z0-9]{4,}$', iban):
+        return False
+    # Verplaats de eerste 4 tekens naar achteren en converteer naar cijfers
+    rearranged = iban[4:] + iban[:4]
+    numeric = "".join(str(ord(c) - 55) if c.isalpha() else c for c in rearranged)
+    return int(numeric) % 97 == 1
+
 # Helperfunctie: voertuiggegevens ophalen
 def fetch_vehicle_data(license_plate):
     try:
         license_plate = license_plate.replace(" ", "").upper()
-        response = requests.get(RDW_API_URL, params={"kenteken": license_plate})
+        response = requests.get(RDW_API_URL, params={"kenteken": license_plate}, timeout=5)
         response.raise_for_status()
         data = response.json()
         if data:
@@ -78,10 +95,18 @@ def calculate_cost(work_selections, vehicle_data):
 @app.route("/", methods=["GET", "POST"])
 def calculator():
     if request.method == "POST":
-        license_plate = request.form.get("license_plate")
+        license_plate = request.form.get("license_plate", "").strip()
+
+        if not license_plate:
+            return render_template(
+                "calculator.html",
+                tasks=TASKS,
+                error="Voer een geldig kenteken in.",
+                work_selections={}
+            )
+
         vehicle_data = fetch_vehicle_data(license_plate)
 
-        # Handle cases where vehicle_data is None
         if vehicle_data is None:
             return render_template(
                 "calculator.html",
@@ -90,16 +115,14 @@ def calculator():
                 work_selections={}
             )
 
-        # Handle cases where an error exists in vehicle_data
         if "error" in vehicle_data:
             return render_template(
                 "calculator.html",
                 tasks=TASKS,
-                error=vehicle_data["error"],  # Display specific error
+                error=vehicle_data["error"],
                 work_selections={}
             )
 
-        # Save vehicle data and selections in session
         session["vehicle_data"] = vehicle_data
         session["work_selections"] = {
             task: request.form.get(task) == "on" for task in TASKS
@@ -112,10 +135,12 @@ def calculator():
 
         return redirect(url_for("summary"))
 
-    return render_template("calculator.html", tasks=TASKS, work_selections={})
-
-# Other routes remain unchanged
-# ...
+    return render_template(
+        "calculator.html",
+        tasks=TASKS,
+        work_selections=session.get("work_selections", {}),
+        vehicle_data=session.get("vehicle_data"),
+    )
 
 # Route: Overzicht
 @app.route("/summary", methods=["GET", "POST"])
@@ -145,11 +170,24 @@ def customer_info():
         return redirect(url_for("calculator"))
 
     if request.method == "POST":
+        iban = request.form.get("iban", "").strip()
+        if not validate_iban(iban):
+            return render_template(
+                "customer_info.html",
+                vehicle_data=vehicle_data,
+                payment_option=session.get("payment_option"),
+                annual_cost_excl_vat=session.get("annual_cost_excl_vat"),
+                annual_cost_incl_vat=session.get("annual_cost_incl_vat"),
+                monthly_cost_excl_vat=session.get("monthly_cost_excl_vat"),
+                monthly_cost_incl_vat=session.get("monthly_cost_incl_vat"),
+                error="Ongeldig IBAN. Controleer het rekeningnummer (bijv. NL91 ABNA 0417 1643 00).",
+                form_data=request.form,
+            )
         session["customer_data"] = {
             "name": request.form.get("name"),
             "address": request.form.get("address"),
             "email": request.form.get("email"),
-            "iban": request.form.get("iban"),
+            "iban": iban.replace(" ", "").upper(),
             "signature": request.form.get("signature"),
         }
         return redirect(url_for("confirmation"))

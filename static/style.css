@@ -1,167 +1,481 @@
-/* General styles for the body of the document */
+/* BMW Design System — Inter as licensed-font substitute */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap');
+
+/* ── Tokens ─────────────────────────────────────────────────────────── */
+:root {
+  --primary:            #1c69d4;
+  --primary-active:     #0653b6;
+  --primary-disabled:   #d6d6d6;
+  --ink:                #262626;
+  --body:               #3c3c3c;
+  --body-strong:        #1a1a1a;
+  --muted:              #6b6b6b;
+  --muted-soft:         #9a9a9a;
+  --hairline:           #e6e6e6;
+  --hairline-strong:    #cccccc;
+  --canvas:             #ffffff;
+  --surface-soft:       #f7f7f7;
+  --surface-card:       #fafafa;
+  --surface-strong:     #ebebeb;
+  --surface-dark:       #1a2129;
+  --surface-dark-elev:  #262e38;
+  --on-primary:         #ffffff;
+  --on-dark:            #ffffff;
+  --on-dark-soft:       #bbbbbb;
+  --success:            #22c55e;
+  --warning:            #f59e0b;
+  --error:              #dc2626;
+
+  --font: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --radius: 0px;
+}
+
+/* ── Reset ───────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Base ────────────────────────────────────────────────────────────── */
+html { scroll-behavior: smooth; }
+
 body {
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f9f9f9;
-    color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    box-sizing: border-box;
+  font-family: var(--font);
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--body);
+  background-color: var(--canvas);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Styling the main container for content */
-.container {
-    max-width: 600px;
-    width: 90%;
-    background-color: #ffffff;
-    border-radius: 20px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    padding: 40px;
-    text-align: left;
-    overflow: hidden;
+/* ── Top Nav ─────────────────────────────────────────────────────────── */
+.top-nav {
+  background: var(--canvas);
+  border-bottom: 1px solid var(--hairline);
+  height: 64px;
+  display: flex;
+  align-items: center;
+  padding: 0 48px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-/* Heading styles */
-h1, h2 {
-    margin: 10px 0;
-    color: #003399;
+.top-nav__logo {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
 }
 
-h1 {
-    font-size: 26px;
-    font-weight: 700;
+.top-nav__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--primary);
+  margin-right: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: 0.5px;
 }
 
-h2 {
-    font-size: 22px;
-    font-weight: 500;
-    color: #666;
+/* ── Hero Band ───────────────────────────────────────────────────────── */
+.hero-band {
+  background: var(--surface-dark);
+  color: var(--on-dark);
+  padding: 64px 48px;
+  text-align: center;
 }
 
-/* Form styling */
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: flex-start;
+.hero-band h1 {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--on-dark);
+  margin-bottom: 12px;
 }
 
-/* Styling for form labels with checkboxes */
-form div {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Adds space between checkbox and label text */
+.hero-band p {
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--on-dark-soft);
+  letter-spacing: 0.3px;
 }
 
-input[type="checkbox"] {
-    width: 20px; /* Adjust size of the checkbox */
-    height: 20px;
-    margin: 0; /* Ensures no extra spacing */
+/* ── Progress Steps ──────────────────────────────────────────────────── */
+.progress-bar {
+  background: var(--surface-strong);
+  padding: 16px 48px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border-bottom: 1px solid var(--hairline);
 }
 
-/* Styling for labels */
+.progress-step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted-soft);
+}
+
+.progress-step.active { color: var(--primary); }
+.progress-step.done   { color: var(--ink); }
+
+.progress-step__num {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+.progress-step.active .progress-step__num {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--on-primary);
+}
+
+.progress-step.done .progress-step__num {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--on-primary);
+}
+
+.progress-divider {
+  flex: 1;
+  height: 1px;
+  background: var(--hairline-strong);
+  margin: 0 16px;
+}
+
+/* ── Page Layout ─────────────────────────────────────────────────────── */
+.page-body {
+  flex: 1;
+  padding: 48px;
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ── Section Labels ──────────────────────────────────────────────────── */
+.section-label {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+
+/* ── Cards ───────────────────────────────────────────────────────────── */
+.card {
+  background: var(--canvas);
+  border: 1px solid var(--hairline);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.card--soft {
+  background: var(--surface-card);
+  border: none;
+}
+
+.card__title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+
+/* ── Form Elements ───────────────────────────────────────────────────── */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
 label {
-    font-size: 18px;
-    color: #333;
-    cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ink);
+  cursor: pointer;
 }
 
-/* Input styles */
-input[type="text"], input[type="number"], input[type="email"] {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #060606;
-    border-radius: 8px;
-    background-color: #f7f7f7;
-    font-size: 16px;
+input[type="text"],
+input[type="email"] {
+  width: 100%;
+  height: 48px;
+  padding: 14px 16px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 16px;
+  font-weight: 300;
+  transition: border-color 0.15s ease;
 }
 
-input:focus {
-    border-color: #003399;
-    outline: none;
+input[type="text"]:focus,
+input[type="email"]:focus {
+  border-color: var(--ink);
+  outline: none;
 }
 
-/* Buttons */
-button {
-    padding: 12px 24px;
-    border: none;
-    border-radius: 25px;
-    background-color: #003399;
-    color: #fff;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 700;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+/* Dutch license plate — keep authentic orange */
+input#license_plate {
+  max-width: 220px;
+  text-transform: uppercase;
+  background-color: #f2a900;
+  color: var(--body-strong);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 2px;
+  border: 2px solid var(--ink);
+  border-radius: 4px;
 }
 
-button:hover {
-    background-color: #001f66;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+/* ── Checkboxes ──────────────────────────────────────────────────────── */
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--hairline);
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: background 0.1s ease;
 }
 
-/* Footer */
-footer {
-    text-align: center;
-    margin-top: 20px;
-    font-size: 14px;
-    color: #666;
+.task-item:hover { background: var(--surface-soft); }
+
+.task-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary);
+  flex-shrink: 0;
+  cursor: pointer;
 }
 
-/* Table styling */
+.task-item label {
+  font-size: 15px;
+  font-weight: 300;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--body);
+  cursor: pointer;
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.task-cost {
+  margin-left: auto;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.task-cost--dynamic {
+  font-weight: 400;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* ── Radio Options ───────────────────────────────────────────────────── */
+.option-tile {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px 24px;
+  border: 1px solid var(--hairline);
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: border-color 0.1s ease;
+}
+
+.option-tile:has(input:checked) {
+  border: 2px solid var(--primary);
+}
+
+.option-tile input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary);
+  flex-shrink: 0;
+  margin-top: 2px;
+  cursor: pointer;
+}
+
+.option-tile label {
+  font-size: 15px;
+  font-weight: 300;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--body);
+  cursor: pointer;
+}
+
+.option-tile label strong {
+  display: block;
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 15px;
+  margin-bottom: 2px;
+}
+
+/* ── Buttons ─────────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  padding: 14px 32px;
+  border: none;
+  border-radius: var(--radius);
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn--primary {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+.btn--primary:hover { background: var(--primary-active); }
+
+.btn--secondary {
+  background: var(--canvas);
+  color: var(--ink);
+  border: 1px solid var(--hairline-strong);
+}
+
+.btn--secondary:hover { background: var(--surface-soft); }
+
+.btn-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+
+/* ── Spec Cells ──────────────────────────────────────────────────────── */
+.spec-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  border-top: 1px solid var(--hairline);
+}
+
+.spec-cell {
+  padding: 24px;
+  border-right: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.spec-cell:last-child { border-right: none; }
+
+.spec-cell__value {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.25;
+}
+
+.spec-cell__label {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* ── Data Table ──────────────────────────────────────────────────────── */
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 th, td {
-    padding: 10px;
-    text-align: left;
-    border: 1px solid #ddd;
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--hairline);
+  font-size: 15px;
 }
 
 th {
-    background-color: #003399;
-    color: white;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: transparent;
 }
 
-/* Button group */
-.button-group button {
-    margin: 10px 5px;
-    padding: 10px 20px;
-    background-color: #003399;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
+td { color: var(--body); font-weight: 300; }
+td strong { font-weight: 700; color: var(--ink); }
+
+tr:last-child th,
+tr:last-child td { border-bottom: none; }
+
+/* ── Alert / Error ───────────────────────────────────────────────────── */
+.alert {
+  padding: 14px 20px;
+  border-left: 4px solid var(--error);
+  background: #fef2f2;
+  color: var(--error);
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 24px;
 }
 
-.button-group button:hover {
-    background-color: #001f66;
+/* ── Footer ──────────────────────────────────────────────────────────── */
+footer {
+  background: var(--surface-soft);
+  color: var(--muted);
+  text-align: center;
+  padding: 32px 48px;
+  font-size: 14px;
+  font-weight: 300;
+  border-top: 1px solid var(--hairline);
+  margin-top: auto;
 }
 
-/* Specifieke styling voor het kenteken invoerveld */
-input#license_plate.license_plate {
-    max-width: 200px;
-    text-transform: uppercase; /* Zet tekst in hoofdletters */
-    color: #000; /* Zwarte tekstkleur */
-    background-color: #ffa500; /* Oranje achtergrondkleur */
-    border: 1px solid #000; /* Zwarte rand */
-    border-radius: 5px; /* Ronde hoeken */
-    padding: 10px; /* Binnenruimte */
-}
-.error-message {
-    color: rgb(255, 255, 255);
-    margin: 10px 5px;
-    padding: 10px 20px;
-    background-color: #ff0000; 
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
+/* ── Responsive ──────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .top-nav { padding: 0 24px; }
+  .hero-band { padding: 48px 24px; }
+  .hero-band h1 { font-size: 32px; }
+  .progress-bar { padding: 12px 24px; }
+  .progress-step span { display: none; }
+  .page-body { padding: 32px 24px; }
+  .spec-grid { grid-template-columns: 1fr 1fr; }
+  footer { padding: 24px; }
 }

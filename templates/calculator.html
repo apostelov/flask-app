@@ -1,52 +1,107 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rekentool</title>
+    <title>Bavarian Motors — Onderhoudskosten Calculator</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Bavarian Motors - Onderhoudskosten Calculator</h1>
 
-        <!-- Foutmelding weergeven, indien aanwezig -->
+    <nav class="top-nav">
+        <a href="/" class="top-nav__logo">
+            <span class="top-nav__badge">BM</span>
+            Bavarian Motors
+        </a>
+    </nav>
+
+    <div class="progress-bar">
+        <div class="progress-step active">
+            <div class="progress-step__num">1</div>
+            <span>Calculator</span>
+        </div>
+        <div class="progress-divider"></div>
+        <div class="progress-step">
+            <div class="progress-step__num">2</div>
+            <span>Overzicht</span>
+        </div>
+        <div class="progress-divider"></div>
+        <div class="progress-step">
+            <div class="progress-step__num">3</div>
+            <span>Gegevens</span>
+        </div>
+        <div class="progress-divider"></div>
+        <div class="progress-step">
+            <div class="progress-step__num">4</div>
+            <span>Bevestiging</span>
+        </div>
+    </div>
+
+    <div class="hero-band">
+        <h1>Onderhoudskosten Calculator</h1>
+        <p>Bereken uw onderhoudskosten voor BMW, MINI en Rolls-Royce</p>
+    </div>
+
+    <main class="page-body">
+
         {% if error %}
-            <p class="error-message">{{ error }}</p>
+        <div class="alert">{{ error }}</div>
         {% endif %}
 
         <form method="POST">
-            <!-- Kenteken invoerveld -->
-            <label for="license_plate">Kenteken:</label>
-            <input 
-                type="text" 
-                id="license_plate" 
-                name="license_plate" 
-                value="{{ vehicle_data.license_plate if vehicle_data else '' }}" 
-                required 
-                placeholder="Uw kenteken"
-                class="license_plate" 
-                style="background-color: orange; text-transform: uppercase;"
-            >
 
-            <h2>Werkzaamheden:</h2>
+            <div class="card">
+                <div class="card__title">Voertuig identificatie</div>
+                <div class="form-group">
+                    <label for="license_plate">Kenteken</label>
+                    <input
+                        type="text"
+                        id="license_plate"
+                        name="license_plate"
+                        value="{{ vehicle_data.license_plate if vehicle_data else '' }}"
+                        required
+                        placeholder="AA-123-B"
+                    >
+                </div>
+            </div>
+
+            <p class="section-label">Werkzaamheden selecteren</p>
+            <p style="font-size:13px;color:var(--muted);margin-bottom:16px;font-weight:300;">
+                Basistarieven: €85 uurtarief. Alle prijzen zijn excl. 21% BTW.
+            </p>
+
             {% for task, data in tasks.items() %}
             <div class="task-item">
-                <input 
-                    type="checkbox" 
-                    name="{{ task }}" 
-                    id="{{ task }}" 
+                <input
+                    type="checkbox"
+                    name="{{ task }}"
+                    id="{{ task }}"
                     {% if work_selections.get(task) %}checked{% endif %}
                 >
-                <label for="{{ task }}">{{ data.label }}</label>
+                <label for="{{ task }}">
+                    {{ data.label }}
+                    {% if data.cost > 0 %}
+                        <span class="task-cost">€{{ data.cost }}</span>
+                    {% elif task == 'oil_change' %}
+                        <span class="task-cost task-cost--dynamic">op basis van motorinhoud</span>
+                    {% elif task == 'spark_plug_replacement' %}
+                        <span class="task-cost task-cost--dynamic">op basis van cilinders</span>
+                    {% endif %}
+                </label>
             </div>
             {% endfor %}
 
-            <button type="submit">Volgende</button>
+            <div class="btn-row">
+                <button type="submit" class="btn btn--primary">Volgende →</button>
+            </div>
+
         </form>
-        <footer>
-            <p>&copy; 2025 Bavarian Motors. All rights reserved.</p>
-        </footer>
-    </div>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Bavarian Motors. All rights reserved.</p>
+    </footer>
+
 </body>
 </html>

@@ -1,75 +1,117 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bevestiging</title>
+    <title>Bavarian Motors — Bevestiging</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Bavarian Motors - Bevestiging</h1>
 
-        <h2>Overzicht van uw gegevens</h2>
-        <table>
-            <tr>
-                <th>Kenteken</th>
-                <td>{{ vehicle_data.license_plate }}</td>
-            </tr>
-            <tr>
-                <th>Model</th>
-                <td>{{ vehicle_data.model }}</td>
-            </tr>
-            <tr>
-                <th>Bouwjaar</th>
-                <td>{{ vehicle_data.year }}</td>
-            </tr>
-            <tr>
-                <th>Naam</th>
-                <td>{{ customer_data.name }}</td>
-            </tr>
-            <tr>
-                <th>Adres</th>
-                <td>{{ customer_data.address }}</td>
-            </tr>
-            <tr>
-                <th>E-mail</th>
-                <td>{{ customer_data.email }}</td>
-            </tr>
-            <tr>
-                <th>IBAN</th>
-                <td>{{ customer_data.iban }}</td>
-            </tr>
-            <tr>
-                <th>Betalingsoptie</th>
-                <td>{{ payment_option }}</td>
-            </tr>
-            <tr>
-                <th>Totale kosten (per jaar excl. BTW)</th>
-                <td>€{{ annual_cost_excl_vat }}</td>
-            </tr>
-            <tr>
-                <th>Totale kosten (per jaar incl. BTW)</th>
-                <td>€{{ annual_cost_incl_vat }}</td>
-            </tr>
-            <tr>
-                <th>Kosten per maand excl. BTW</th>
-                <td>€{{ monthly_cost_excl_vat }}</td>
-            </tr>
-            <tr>
-                <th>Kosten per maand incl. BTW</th>
-                <td>€{{ monthly_cost_incl_vat }}</td>
-            </tr>
-        </table>
+    <nav class="top-nav">
+        <a href="/" class="top-nav__logo">
+            <span class="top-nav__badge">BM</span>
+            Bavarian Motors
+        </a>
+    </nav>
 
-        <div class="button-group">
-            <button type="button" onclick="window.print()">Print</button>
-            <button type="button" onclick="location.href='mailto:?subject=Bavarian Motors Kostenoverzicht&body=Hier is uw kostenoverzicht: {{ customer_data }}'">E-mail</button>
+    <div class="progress-bar">
+        <div class="progress-step done">
+            <div class="progress-step__num">1</div>
+            <span>Calculator</span>
+        </div>
+        <div class="progress-divider"></div>
+        <div class="progress-step done">
+            <div class="progress-step__num">2</div>
+            <span>Overzicht</span>
+        </div>
+        <div class="progress-divider"></div>
+        <div class="progress-step done">
+            <div class="progress-step__num">3</div>
+            <span>Gegevens</span>
+        </div>
+        <div class="progress-divider"></div>
+        <div class="progress-step active">
+            <div class="progress-step__num">4</div>
+            <span>Bevestiging</span>
+        </div>
+    </div>
+
+    <div class="hero-band">
+        <h1>Aanvraag bevestigd</h1>
+        <p>Uw onderhoudsabonnement is succesvol aangevraagd</p>
+    </div>
+
+    <main class="page-body">
+
+        <p class="section-label">Voertuig &amp; klantgegevens</p>
+        <div class="card card--soft">
+            <table>
+                <tr>
+                    <th>Kenteken</th>
+                    <td><strong>{{ vehicle_data.license_plate }}</strong></td>
+                </tr>
+                <tr>
+                    <th>Model</th>
+                    <td>{{ vehicle_data.model }}</td>
+                </tr>
+                <tr>
+                    <th>Bouwjaar</th>
+                    <td>{{ vehicle_data.year }}</td>
+                </tr>
+                <tr>
+                    <th>Naam</th>
+                    <td>{{ customer_data.name }}</td>
+                </tr>
+                <tr>
+                    <th>Adres</th>
+                    <td>{{ customer_data.address }}</td>
+                </tr>
+                <tr>
+                    <th>E-mail</th>
+                    <td>{{ customer_data.email }}</td>
+                </tr>
+                <tr>
+                    <th>IBAN</th>
+                    <td>{{ customer_data.iban }}</td>
+                </tr>
+                <tr>
+                    <th>Betalingsoptie</th>
+                    <td><strong>{{ payment_option }}</strong></td>
+                </tr>
+            </table>
         </div>
 
-        <footer>
-            <p>&copy; 2025 Bavarian Motors. All rights reserved.</p>
-        </footer>
-    </div>
+        <p class="section-label">Kostenspecificatie</p>
+        <div class="spec-grid">
+            <div class="spec-cell">
+                <div class="spec-cell__value">€{{ annual_cost_excl_vat }}</div>
+                <div class="spec-cell__label">Per jaar excl. BTW</div>
+            </div>
+            <div class="spec-cell">
+                <div class="spec-cell__value">€{{ annual_cost_incl_vat }}</div>
+                <div class="spec-cell__label">Per jaar incl. BTW</div>
+            </div>
+            <div class="spec-cell">
+                <div class="spec-cell__value">€{{ monthly_cost_excl_vat }}</div>
+                <div class="spec-cell__label">Per maand excl. BTW</div>
+            </div>
+            <div class="spec-cell">
+                <div class="spec-cell__value">€{{ monthly_cost_incl_vat }}</div>
+                <div class="spec-cell__label">Per maand incl. BTW</div>
+            </div>
+        </div>
+
+        <div class="btn-row" style="margin-top: 40px;">
+            <button type="button" onclick="window.print()" class="btn btn--secondary">Afdrukken</button>
+            <a href="/" class="btn btn--primary">Nieuwe berekening</a>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Bavarian Motors. All rights reserved.</p>
+    </footer>
+
 </body>
 </html>

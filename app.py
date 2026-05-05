@@ -142,6 +142,12 @@ def calculator():
         vehicle_data=session.get("vehicle_data"),
     )
 
+
+
+@app.route("/webpage", methods=["GET"])
+def webpage():
+    return render_template("webpage.html")
+
 # Route: Overzicht
 @app.route("/summary", methods=["GET", "POST"])
 def summary():

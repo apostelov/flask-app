@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bavarian Motors Webpage</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <div class="container">
+    <h1>Hier is de webpage</h1>
+    <p>Open de onderhoudscalculator via de knop hieronder.</p>
+    <p><a class="button" href="{{ url_for('calculator') }}">Ga naar de calculator</a></p>
+  </div>
+</body>
+</html>
